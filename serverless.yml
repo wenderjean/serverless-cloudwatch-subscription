@@ -1,10 +1,8 @@
-service: aws-nodejs
+service: serverless-cloudwatch-subscription
 
 provider:
   name: aws
   runtime: nodejs6.10
-  stage: dev
-  region: us-east-1
 
 plugins:
   - serverless-pseudo-parameters
@@ -13,45 +11,64 @@ plugins:
 custom:
   logSubscription:
     enabled: true
-
-iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "logs:PutRetentionPolicy"
-        - "logs:PutSubscriptionFilter"
-      Resource: "*"
+    roleArn:
+      Fn::GetAtt:
+        - KinesisStreamIAMRole
+        - Arn
+    destinationArn:
+      Fn::GetAtt:
+        - LoggingStream
+        - Arn
 
 functions:
-  send-logs-to-es:
-    handler: send-to-es.handler
+  ship:
+    handler: functions/logging/ship.handler
+    timeout: 10
+    logSubscription: false
+    events:
+      - stream:
+          type: kinesis
+          batchSize: 3
+          startingPosition: TRIM_HORIZON
+          enabled: true
+          arn:
+            Fn::GetAtt:
+              - LoggingStream
+              - Arn
     environment:
       ELASTICSEARCH_URL: "https://search-my-test-domain-tfdshojp63lnfe7cv372n35qoa.us-east-1.es.amazonaws.com"
-  subscribe:
-    handler: subscriber.handler
-    description: Subscribe logs to be send to elasticsearch
-    environment:
-      SEND_LOGS_TO_ES: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${self:provider.stage}-send-logs-to-es"
-    events:
-      - cloudwatchEvent:
-          event:
-            source:
-              - "aws.logs"
-            detail:
-              eventSource:
-                - logs.amazonaws.com
-              eventName:
-                - CreateLogGroup
   testing:
-    handler: testing.handler
+    handler: functions/testing/index.handler
 
 resources:
   Resources:
-    LambdaInvokePermission:
-      Type: AWS::Lambda::Permission
+    LoggingStream:
+      Type: AWS::Kinesis::Stream
       Properties:
-        Action: lambda:InvokeFunction
-        FunctionName:
-          Fn::Join:
-            - ""
-            - - "Ref" : "SendDashlogsDashtoDashesLambdaFunction"
-        Principal: logs.#{AWS::Region}.amazonaws.com
+        Name: Logging
+        ShardCount: 1
+    KinesisStreamIAMRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'KinesisAnalyticsAssumeRole'
+              Effect: Allow
+              Principal:
+                Service: logs.#{AWS::Region}.amazonaws.com
+              Action: 'sts:AssumeRole'
+        Policies:
+          - PolicyName: kinesis-stream-policy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - "kinesis:DescribeStream"
+                    - "kinesis:PutRecord"
+                    - "kinesis:PutRecords"
+                  Resource:
+                    'Fn::GetAtt':
+                      - LoggingStream
+                      - Arn
