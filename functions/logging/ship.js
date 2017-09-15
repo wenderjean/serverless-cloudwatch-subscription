@@ -24,23 +24,23 @@ const unzip = (phrase) => {
 
 const ship = (body) => {
   return Elasticsearch.create({
-  	index: 'platform',
-  	type: 'logging',
-  	id: uuid.v1(),
-  	body
+    index: 'platform',
+    type: 'logging',
+    id: uuid.v1(),
+    body
   });
 };
 
 const handler = (event, context, callback) => {
-	return Promise.resolve(event)
-		.then(get('Records'))
-    .then(map('kinesis.data'))
-		.then(map(unzip))
-    .then(wait)
-		.then(map(ship))
-    .then(wait)
-		.then(() => callback(null, 'SENT'))
-  	.catch((err) => callback(err));
+  return Promise.resolve(event)
+  .then(get('Records'))
+  .then(map('kinesis.data'))
+  .then(map(unzip))
+  .then(wait)
+  .then(map(ship))
+  .then(wait)
+  .then(() => callback(null))
+  .catch((err) => callback(err));
 };
 
 module.exports = { handler };

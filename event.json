@@ -1,0 +1,20 @@
+{
+  "Records": [
+    {
+      "kinesis": {
+        "kinesisSchemaVersion": "1.0",
+        "partitionKey": "3e21f5e8240cbb048271af4fdb892a1c",
+        "sequenceNumber": "49577037005798453551076751615674964755164214887823966210",
+        "data": "H4sIAAAAAAAAADWOwQqCQBRFf2WYtURpQbmLMBdZQQYtImLSlz7SGZk3JiH+e2Pa8nAv956Wl0AkMjh/KuA+3xwP59Mxuu+DOF6HAXe4aiToPilUnTbCJHmkMrJBobJQq7qy2UCx0SDKAal+UKKxMqjkFgsDmrh/vf16wRuk6bHlmA51g1bDiNKOzRbTxXy1XLnu1POcv14vcInYqMdGPZ9tckheKDOWgyhMztSTpXYJpeif2Q4lEBKjn9qEd7fuCwXMrq7yAAAA",
+        "approximateArrivalTimestamp": 1505498922.229
+      },
+      "eventSource": "aws:kinesis",
+      "eventVersion": "1.0",
+      "eventID": "shardId-000000000000:49577037005798453551076751615674964755164214887823966210",
+      "eventName": "aws:kinesis:record",
+      "invokeIdentityArn": "arn:aws:iam::238379209470:role/serverless-cloudwatch-subscription-dev-us-east-1-lambdaRole",
+      "awsRegion": "us-east-1",
+      "eventSourceARN": "arn:aws:kinesis:us-east-1:238379209470:stream/Logging"
+    }
+  ]
+}
