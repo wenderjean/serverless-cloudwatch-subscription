@@ -1,0 +1,21 @@
+{
+  "name": "serverless-cloudwatch-subscription",
+  "version": "1.0.0",
+  "description": "Demo to show how to subscribe cloudwatch streams to Kinesis",
+  "author": "Wender Freese <wender.jean@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wenderjean/serverless-cloudwatch-subscription.git"
+  },
+  "dependencies": {
+    "elasticsearch": "^13.3.1",
+    "uuid": "^3.1.0",
+    "zlib": "^1.0.5"
+  },
+  "devDependencies": {
+    "serverless": "^1.22.0",
+    "serverless-pseudo-parameters": "^1.1.5",
+    "serverless-plugin-log-subscription": "^1.1.0"
+  }
+}

@@ -1,0 +1,57 @@
+service: aws-nodejs
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: us-east-1
+
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-plugin-log-subscription
+
+custom:
+  logSubscription:
+    enabled: true
+
+iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "logs:PutRetentionPolicy"
+        - "logs:PutSubscriptionFilter"
+      Resource: "*"
+
+functions:
+  send-logs-to-es:
+    handler: send-to-es.handler
+    environment:
+      ELASTICSEARCH_URL: "https://search-my-test-domain-tfdshojp63lnfe7cv372n35qoa.us-east-1.es.amazonaws.com"
+  subscribe:
+    handler: subscriber.handler
+    description: Subscribe logs to be send to elasticsearch
+    environment:
+      SEND_LOGS_TO_ES: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:${self:service}-${self:provider.stage}-send-logs-to-es"
+    events:
+      - cloudwatchEvent:
+          event:
+            source:
+              - "aws.logs"
+            detail:
+              eventSource:
+                - logs.amazonaws.com
+              eventName:
+                - CreateLogGroup
+  testing:
+    handler: testing.handler
+
+resources:
+  Resources:
+    LambdaInvokePermission:
+      Type: AWS::Lambda::Permission
+      Properties:
+        Action: lambda:InvokeFunction
+        FunctionName:
+          Fn::Join:
+            - ""
+            - - "Ref" : "SendDashlogsDashtoDashesLambdaFunction"
+        Principal: logs.#{AWS::Region}.amazonaws.com
