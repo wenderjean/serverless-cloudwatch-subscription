@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "elasticsearch": "^13.3.1",
+    "lodash": "^4.17.4",
     "uuid": "^3.1.0",
     "zlib": "^1.0.5"
   },
   "devDependencies": {
     "serverless": "^1.22.0",
-    "serverless-pseudo-parameters": "^1.1.5",
-    "serverless-plugin-log-subscription": "^1.1.0"
+    "serverless-plugin-log-subscription": "^1.1.0",
+    "serverless-pseudo-parameters": "^1.1.5"
   }
 }
