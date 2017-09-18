@@ -36,7 +36,7 @@ functions:
               - LoggingStream
               - Arn
     environment:
-      ELASTICSEARCH_URL: << YOUR ELASTICSEARCH URL >>
+      ELASTICSEARCH_URL: "https://search-my-test-domain-tfdshojp63lnfe7cv372n35qoa.us-east-1.es.amazonaws.com"
   testing:
     handler: functions/testing/index.handler
 

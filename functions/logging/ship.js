@@ -1,8 +1,9 @@
 'use strict';
 
-const { get, map } = require('lodash/fp');
+const { get, map, compact, flatten } = require('lodash/fp');
 const uuid = require('uuid');
 const zlib = require('zlib');
+const Parse = require('./parse');
 
 const Elasticsearch = require('elasticsearch').Client({
   host: process.env.ELASTICSEARCH_URL
@@ -17,7 +18,7 @@ const unzip = (phrase) => {
       if (err) {
         return reject(err);
       }
-      return resolve(buffer.toString());
+      return resolve(JSON.parse(buffer.toString()));
     });
   });
 };
@@ -31,12 +32,28 @@ const ship = (body) => {
   });
 };
 
+
+const createLogs = ({ logGroup, logStream, logEvents }) => {
+  const parsed = logEvents.map(({ timestamp, message }) => {
+    let type;
+    if (message.startsWith('REPORT RequestId')) {
+      return Parse.sys(logGroup, logStream, timestamp, message);
+    }
+
+    return Parse.log(message);
+  });
+
+  return compact(parsed);
+};
+
 const handler = (event, context, callback) => {
   return Promise.resolve(event)
   .then(get('Records'))
   .then(map('kinesis.data'))
   .then(map(unzip))
   .then(wait)
+  .then(map(createLogs))
+  .then(flatten)
   .then(map(ship))
   .then(wait)
   .then(() => callback(null))

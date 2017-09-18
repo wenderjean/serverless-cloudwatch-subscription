@@ -1,20 +1,20 @@
 {
   "Records": [
-    {
-      "kinesis": {
-        "kinesisSchemaVersion": "1.0",
-        "partitionKey": "3e21f5e8240cbb048271af4fdb892a1c",
-        "sequenceNumber": "49577037005798453551076751615674964755164214887823966210",
-        "data": "H4sIAAAAAAAAADWOwQqCQBRFf2WYtURpQbmLMBdZQQYtImLSlz7SGZk3JiH+e2Pa8nAv956Wl0AkMjh/KuA+3xwP59Mxuu+DOF6HAXe4aiToPilUnTbCJHmkMrJBobJQq7qy2UCx0SDKAal+UKKxMqjkFgsDmrh/vf16wRuk6bHlmA51g1bDiNKOzRbTxXy1XLnu1POcv14vcInYqMdGPZ9tckheKDOWgyhMztSTpXYJpeif2Q4lEBKjn9qEd7fuCwXMrq7yAAAA",
-        "approximateArrivalTimestamp": 1505498922.229
-      },
-      "eventSource": "aws:kinesis",
-      "eventVersion": "1.0",
-      "eventID": "shardId-000000000000:49577037005798453551076751615674964755164214887823966210",
-      "eventName": "aws:kinesis:record",
-      "invokeIdentityArn": "arn:aws:iam::238379209470:role/serverless-cloudwatch-subscription-dev-us-east-1-lambdaRole",
-      "awsRegion": "us-east-1",
-      "eventSourceARN": "arn:aws:kinesis:us-east-1:238379209470:stream/Logging"
-    }
+      {
+          "kinesis": {
+              "kinesisSchemaVersion": "1.0",
+              "partitionKey": "070d9616979af902ff89497a311baea5",
+              "sequenceNumber": "49577044940582001149895521550717418873938388764575399938",
+              "data": "H4sIAAAAAAAAAK2SXU/bMBiF/4rl7WJITeOvxHHuCmQMRGFLs5uRanITFzLy0dlOgVX973NKJyHtplPnO59jHR8/rzewUcbIe5W9rBSM4fkkm3yfJrPZ5CKBI9g9tUo7mdCIckGQYBw5ue7uL3TXr5zjyyfj17JZlNI3Sq+Vrl2gV9RdXz5JWzx4pl+YQlcrW3WtV6q1Z5WxVXv/mjOzWslmuAJh7iPh48i/e389yZJZNhcsDBWKIhSWlC0xWyyZJCHlCEseyYi4iLfpH6vaKm1gfAcPrJK9Vpn9FeLxNP10NkFnX9DVFZzvqiZr1dohfQOr0jWmNOACExYEkYgoCQNKOYtIIHhIQhxwxiiiboMIchbiIiAIBXhobSuH3crGEcQBckcRIjgUZPRnHHsgHhIejjJMY8RjhMehwN9yy4hcoMWSeqLgxMNYcS8SsvAKwTlbhpKUS5HbJE1vU5Bo3ekYvJOLIm+BW9KCpiv7Wo3V86rT1owfZFvWSoMP/lpq30rz6C/7thhgGH8/LL9qS/U8/mFiFhN2krdwOzoOAz0KAzkYwyaHamAwfU3MYZzD4XNd3lzkcLQ3h9+/c3a4drrrVTxmWhaDcZfDo6AFMSYnOZxv/wM4diC45OYcpOpn7w5eljE4iNbx7YID26XJ59s0++eC9rzXcoAcAzxmDDQmt6dVXasSvHEQcgbI7VQ1nX4Bs+qXGlTCwPTUqfIZ7J2vRrmbCd7pw+vn299DZm33EgUAAA==",
+              "approximateArrivalTimestamp": 1505740037.464
+          },
+          "eventSource": "aws:kinesis",
+          "eventVersion": "1.0",
+          "eventID": "shardId-000000000000:49577044940582001149895521550717418873938388764575399938",
+          "eventName": "aws:kinesis:record",
+          "invokeIdentityArn": "arn:aws:iam::238379209470:role/serverless-cloudwatch-subscription-dev-us-east-1-lambdaRole",
+          "awsRegion": "us-east-1",
+          "eventSourceARN": "arn:aws:kinesis:us-east-1:238379209470:stream/Logging"
+      }
   ]
 }
